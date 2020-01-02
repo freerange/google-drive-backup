@@ -21,6 +21,9 @@
     "typescript": "~3.7.2"
   },
   "dependencies": {
+    "@aws-cdk/aws-ecs": "^1.19.0",
+    "@aws-cdk/aws-ecs-patterns": "^1.19.0",
+    "@aws-cdk/aws-events": "^1.19.0",
     "@aws-cdk/core": "^1.19.0",
     "source-map-support": "^0.5.16"
   }
