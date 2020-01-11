@@ -6,13 +6,13 @@ Schedules an ECS Fargate Task to execute a backup script within a Docker contain
 
 ```
 ├── lib
-│   └── google-drive-backup-stack.ts    # contains ECS Task definition
+│   └── google-drive-backup-stack.ts      # contains ECS Task definition
 └── local-image
-    ├── Dockerfile                      # defines docker image for ECS Task
+    ├── Dockerfile                        # defines docker image for ECS Task
     └── home
-        ├── backup.sh                   # script executed by ECS Task
-        ├── google-drive-credentials.sh # credentials for Google Drive
-        └── rclone.conf                 # includes credentials for AWS S3
+        ├── backup.sh                     # script executed by ECS Task
+        ├── google-drive-credentials.json # credentials for Google Drive
+        └── rclone.conf                   # includes credentials for AWS S3
 ```
 
 ## Credentials
