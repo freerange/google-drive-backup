@@ -1,5 +1,7 @@
 # Google Drive Backup
 
+<img src="https://healthchecks.io/badge/311aafdb-71ec-4397-865b-d6437d/zmvTEXvR/google-drive-backup.svg" />
+
 ## Signifcant files
 
 Schedules an ECS Fargate Task to execute a backup script within a Docker container. The backup script runs the `rclone sync` command with a Google Drive directory as the source and an AWS S3 bucket as the target.
