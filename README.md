@@ -17,8 +17,16 @@ Schedules an ECS Fargate Task to execute a backup script within a Docker contain
         └── rclone.conf                   # includes config for AWS S3
 ```
 
-## Credentials
+## Configuration
 
+Specify values for the following environment variables in the `.env` file:
+
+* `HEALTHCHECKS_URL` - ping URL for healthchecks.io check
+* `GOOGLE_DRIVE_IMPERSONATION_EMAIL` - email address to use with rclone `--drive-impersonate` option
+* `GOOGLE_DRIVE_FOLDER` - source folder path
+* `RCLONE_S3_REGION` - AWS region in which `cdk deploy` was run and thus S3 bucket was created
+
+## Credentials
 
 ### Google Drive access
 

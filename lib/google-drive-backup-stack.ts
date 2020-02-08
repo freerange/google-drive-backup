@@ -5,6 +5,9 @@ import * as aas from '@aws-cdk/aws-applicationautoscaling';
 import * as iam from '@aws-cdk/aws-iam';
 import * as s3 from '@aws-cdk/aws-s3';
 import { ScheduledFargateTaskOnPublicSubnet } from './scheduled-fargate-task-on-public-subnet';
+import * as dotenv from 'dotenv';
+
+dotenv.config();
 
 export class GoogleDriveBackupStack extends cdk.Stack {
   constructor(scope: cdk.Construct, id: string, props?: cdk.StackProps) {
@@ -23,11 +26,11 @@ export class GoogleDriveBackupStack extends cdk.Stack {
     taskDefinition.addContainer('backupTaskContainer', {
       image: ecs.ContainerImage.fromAsset('./local-image'),
       environment: {
-        'HEALTHCHECKS_URL': 'https://hc-ping.com/be6872b3-58a7-4e1d-94b3-619e3dcecc95',
-        'GOOGLE_DRIVE_IMPERSONATION_EMAIL': 'james.mead@gofreerange.com',
-        'GOOGLE_DRIVE_FOLDER': 'Go Free Range',
+        'HEALTHCHECKS_URL': process.env.HEALTHCHECKS_URL || '',
+        'GOOGLE_DRIVE_IMPERSONATION_EMAIL': process.env.GOOGLE_DRIVE_IMPERSONATION_EMAIL || '',
+        'GOOGLE_DRIVE_FOLDER': process.env.GOOGLE_DRIVE_FOLDER || '',
         'S3_BUCKET_NAME': backupsBucket.bucketName,
-        'RCLONE_S3_REGION': 'eu-west-2'
+        'RCLONE_S3_REGION': process.env.RCLONE_S3_REGION || ''
       },
       logging: new ecs.AwsLogDriver({ streamPrefix: this.node.id })
     });
