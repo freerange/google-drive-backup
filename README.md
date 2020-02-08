@@ -14,7 +14,7 @@ Schedules an ECS Fargate Task to execute a backup script within a Docker contain
     └── home
         ├── backup.sh                     # script executed by ECS Task
         ├── google-drive-credentials.json # credentials for Google Drive
-        └── rclone.conf                   # includes credentials for AWS S3
+        └── rclone.conf                   # includes config for AWS S3
 ```
 
 ## Credentials
@@ -29,11 +29,11 @@ Note that these credentials are currently baked in to the Docker image filesyste
 
 ### AWS S3 access
 
-* Copy `local-image/home/rclone.example.conf` to `local-image/home/rclone.conf` and replace `<access-key-id>`, `<secret-access-key>` & `<aws-region>` with the appropriate values from the "Google Drive Backup (AWS IAM user credentials)" entry for the `gfr-google-drive-backup` user in the shared 1Password vault.
+* This is setup automatically when running `cdk deploy` to generate the stack. The `rclone` `env_auth` config setting is set to `true` so that `rclone` uses the IAM role assigned to the ECS Task - see [this section of the documentation](https://rclone.org/s3/#authentication).
 
 ## Useful commands
 
-Note that `cdk` commands should be run with credentials for an AWS IAM user that has wide ranging permissions to use CloudFormation to create/update/destroy AWS resources. The `gfr-google-drive-backup` user used by `rclone` (see above) is not suitable for this purpose, because it has quite restricted permissions.
+Note that `cdk` commands should be run with credentials for an AWS IAM user that has wide ranging permissions to use CloudFormation to create/update/destroy AWS resources.
 
 * `npm run build`   compile typescript to js
 * `npm run watch`   watch for changes and compile

@@ -7,7 +7,7 @@ curl --retry 3 $HEALTHCHECKS_URL/start
 rclone \
   --config rclone.conf --verbose \
   --drive-impersonate james.mead@gofreerange.com \
-  sync "google-drive:Go Free Range" s3:gfr-google-drive-backup
+  sync "google-drive:Go Free Range" s3:$S3_BUCKET_NAME
 
 if [ $? -eq 0 ]
 then
