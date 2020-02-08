@@ -23,6 +23,9 @@ export class GoogleDriveBackupStack extends cdk.Stack {
     taskDefinition.addContainer('backupTaskContainer', {
       image: ecs.ContainerImage.fromAsset('./local-image'),
       environment: {
+        'HEALTHCHECKS_URL': 'https://hc-ping.com/be6872b3-58a7-4e1d-94b3-619e3dcecc95',
+        'GOOGLE_DRIVE_IMPERSONATION_EMAIL': 'james.mead@gofreerange.com',
+        'GOOGLE_DRIVE_FOLDER': 'Go Free Range',
         'S3_BUCKET_NAME': backupsBucket.bucketName,
         'RCLONE_S3_REGION': 'eu-west-2'
       },
