@@ -19,13 +19,14 @@ Schedules an ECS Fargate Task to execute a backup script within a Docker contain
 
 ## Credentials
 
-Note that these credentials are currently baked in to the Docker image filesystem which is not ideal.
 
 ### Google Drive access
 
 * Download the JSON credentials file attached to the "Google Drive Backup (Google Service Account user)" entry in the shared 1Password vault and save it as `local-image/home/google-drive-credentials.json`.
 
 * We use these Google Service Account credentials to impersonate a user via [domain-wide delegation of authority](https://developers.google.com/admin-sdk/directory/v1/guides/delegation) as per [these instructions](https://rclone.org/drive/#use-case-google-apps-g-suite-account-and-individual-drive).
+
+* Note that these credentials are currently baked in to the Docker image filesystem which is not ideal.
 
 ### AWS S3 access
 
