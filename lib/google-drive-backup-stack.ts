@@ -4,6 +4,7 @@ import * as ec2 from '@aws-cdk/aws-ec2';
 import * as aas from '@aws-cdk/aws-applicationautoscaling';
 import * as iam from '@aws-cdk/aws-iam';
 import * as s3 from '@aws-cdk/aws-s3';
+import * as sm from '@aws-cdk/aws-secretsmanager';
 import { ScheduledFargateTaskOnPublicSubnet } from './scheduled-fargate-task-on-public-subnet';
 import * as dotenv from 'dotenv';
 
@@ -18,6 +19,10 @@ export class GoogleDriveBackupStack extends cdk.Stack {
     const backupsBucket = new s3.Bucket(this, 'backupsBucket');
     backupsBucket.grantReadWrite(role);
 
+    const googleDriveCredentialsSecret = new sm.Secret(this, 'googleDriveCredentials', {
+      secretName: '/google-drive-backup/RCLONE_DRIVE_SERVICE_ACCOUNT_CREDENTIALS'
+    });
+
     const taskDefinition = new ecs.FargateTaskDefinition(this, 'backupTaskDefinition', {
       taskRole: role,
       cpu: 4 * 1024,
@@ -31,6 +36,11 @@ export class GoogleDriveBackupStack extends cdk.Stack {
         'GOOGLE_DRIVE_FOLDER': process.env.GOOGLE_DRIVE_FOLDER || '',
         'S3_BUCKET_NAME': backupsBucket.bucketName,
         'RCLONE_S3_REGION': process.env.RCLONE_S3_REGION || ''
+      },
+      secrets: {
+        'RCLONE_DRIVE_SERVICE_ACCOUNT_CREDENTIALS': ecs.Secret.fromSecretsManager(
+          googleDriveCredentialsSecret
+        )
       },
       logging: new ecs.AwsLogDriver({ streamPrefix: this.node.id })
     });

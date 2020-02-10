@@ -13,7 +13,6 @@ Schedules an ECS Fargate Task to execute a backup script within a Docker contain
     ├── Dockerfile                        # defines docker image for ECS Task
     └── home
         ├── backup.sh                     # script executed by ECS Task
-        ├── google-drive-credentials.json # credentials for Google Drive
         └── rclone.conf                   # includes config for AWS S3
 ```
 
@@ -30,11 +29,17 @@ Specify values for the following environment variables in the `.env` file:
 
 ### Google Drive access
 
-* Download the JSON credentials file attached to the "Google Drive Backup (Google Service Account user)" entry in the shared 1Password vault and save it as `local-image/home/google-drive-credentials.json`.
+* Download the JSON credentials file attached to the "Google Drive Backup (Google Service Account user)" entry in the shared 1Password vault and save them in a temporary file called `google-drive-credentials.json`.
+
+* Running `cdk deploy` creates a secret named `/google-drive-backup/RCLONE_DRIVE_SERVICE_ACCOUNT_CREDENTIALS` in the AWS Secrets Manager with an automatically generated value. You should overwrite the value of that secret with the JSON credentials string from the previous step using the following command:
+
+```
+$ aws secretsmanager put-secret-value --secret-id /google-drive-backup/RCLONE_DRIVE_SERVICE_ACCOUNT_CREDENTIALS --secret-string `cat google-drive-credentials.json`
+```
+
+* You can delete the temporary file, `google-drive-credentials.json`, after you've done this, but it might be worth keeping a record of them somewhere secure.
 
 * We use these Google Service Account credentials to impersonate a user via [domain-wide delegation of authority](https://developers.google.com/admin-sdk/directory/v1/guides/delegation) as per [these instructions](https://rclone.org/drive/#use-case-google-apps-g-suite-account-and-individual-drive).
-
-* Note that these credentials are currently baked in to the Docker image filesystem which is not ideal.
 
 ### AWS S3 access
 
