@@ -24,6 +24,7 @@ Specify values for the following environment variables in the `.env` file:
 * `GOOGLE_DRIVE_IMPERSONATION_EMAIL` - email address to use with rclone `--drive-impersonate` option
 * `GOOGLE_DRIVE_FOLDER` - source folder path
 * `RCLONE_S3_REGION` - AWS region in which `cdk deploy` was run and thus S3 bucket was created
+* `CRON_SCHEDULE` - JSON representation of JavaScript object conforming to [`CronOptions` interface](https://docs.aws.amazon.com/cdk/api/latest/docs/@aws-cdk_aws-applicationautoscaling.CronOptions.html), e.g. `{"weekDay":"mon","hour":"03","minute":"15"}`
 
 ## Credentials
 

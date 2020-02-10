@@ -53,9 +53,7 @@ export class GoogleDriveBackupStack extends cdk.Stack {
     });
     const cluster = new ecs.Cluster(this, 'cluster', { vpc });
 
-    const schedule = aas.Schedule.cron({
-      weekDay: 'sun', hour: '0', minute: '30'
-    });
+    const schedule = aas.Schedule.cron(JSON.parse(process.env.CRON_SCHEDULE || '{}'));
 
     const backupTask = new ScheduledFargateTaskOnPublicSubnet(this, 'backupTask', {
       cluster: cluster,
