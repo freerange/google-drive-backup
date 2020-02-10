@@ -16,7 +16,9 @@ export class GoogleDriveBackupStack extends cdk.Stack {
 
     const servicePrincipal = new iam.ServicePrincipal('ecs-tasks.amazonaws.com');
     const role = new iam.Role(this, 'backupsRole', { assumedBy: servicePrincipal });
-    const backupsBucket = new s3.Bucket(this, 'backupsBucket');
+    const backupsBucket = new s3.Bucket(this, 'backupsBucket', {
+      versioned: true
+    });
     backupsBucket.grantReadWrite(role);
 
     const googleDriveCredentialsSecret = new sm.Secret(this, 'googleDriveCredentials', {
