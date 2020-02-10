@@ -42,6 +42,8 @@ $ aws secretsmanager put-secret-value --secret-id /google-drive-backup/RCLONE_DR
 
 * We use these Google Service Account credentials to impersonate a user via [domain-wide delegation of authority](https://developers.google.com/admin-sdk/directory/v1/guides/delegation) as per [these instructions](https://rclone.org/drive/#use-case-google-apps-g-suite-account-and-individual-drive).
 
+* The `RCLONE_DRIVE_SERVICE_ACCOUNT_CREDENTIALS` environment variable specifies the credentials for rclone to use for Google Drive (see [this documentation](https://rclone.org/drive/#advanced-options) for details).
+
 ### AWS S3 access
 
 * This is setup automatically when running `cdk deploy` to generate the stack. The `rclone` `env_auth` config setting is set to `true` so that `rclone` uses the IAM role assigned to the ECS Task - see [this section of the documentation](https://rclone.org/s3/#authentication).
