@@ -5,7 +5,7 @@ import * as aas from '@aws-cdk/aws-applicationautoscaling';
 import * as iam from '@aws-cdk/aws-iam';
 import * as s3 from '@aws-cdk/aws-s3';
 import * as sm from '@aws-cdk/aws-secretsmanager';
-import { ScheduledFargateTaskOnPublicSubnet } from './scheduled-fargate-task-on-public-subnet';
+import * as ecsp from '@aws-cdk/aws-ecs-patterns';
 import * as dotenv from 'dotenv';
 
 dotenv.config();
@@ -57,8 +57,9 @@ export class GoogleDriveBackupStack extends cdk.Stack {
 
     const schedule = aas.Schedule.cron(JSON.parse(process.env.CRON_SCHEDULE || '{}'));
 
-    const backupTask = new ScheduledFargateTaskOnPublicSubnet(this, 'backupTask', {
+    const backupTask = new ecsp.ScheduledFargateTask(this, 'backupTask', {
       cluster: cluster,
+      subnetSelection: { subnetType: ec2.SubnetType.PUBLIC },
       scheduledFargateTaskDefinitionOptions: {
         taskDefinition: taskDefinition
       },
