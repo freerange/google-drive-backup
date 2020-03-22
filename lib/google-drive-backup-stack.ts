@@ -60,7 +60,7 @@ export class GoogleDriveBackupStack extends cdk.Stack {
     const backupTask = new ScheduledFargateTaskOnPublicSubnet(this, 'backupTask', {
       cluster: cluster,
       scheduledFargateTaskDefinitionOptions: {
-        taskDefinition: taskDefinition, schedule: schedule
+        taskDefinition: taskDefinition
       },
       schedule: schedule
     });
