@@ -26,7 +26,6 @@
     "@aws-cdk/aws-ecs": "^1.29.0",
     "@aws-cdk/aws-ecs-patterns": "^1.29.0",
     "@aws-cdk/aws-events": "^1.29.0",
-    "@aws-cdk/aws-events-targets": "^1.29.0",
     "@aws-cdk/aws-iam": "^1.29.0",
     "@aws-cdk/aws-s3": "^1.29.0",
     "@aws-cdk/aws-secretsmanager": "^1.29.0",
