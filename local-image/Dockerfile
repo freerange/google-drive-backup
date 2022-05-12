@@ -1,7 +1,11 @@
 FROM ubuntu:latest
+ARG RCLONE_VERSION="v1.58.1"
 RUN apt-get update && \
-    DEBIAN_FRONTEND=noninteractive apt-get install --assume-yes curl unzip
-RUN curl https://rclone.org/install.sh | bash
+    DEBIAN_FRONTEND=noninteractive apt-get install --assume-yes wget unzip
+RUN wget "https://github.com/ncw/rclone/releases/download/${RCLONE_VERSION}/rclone-${RCLONE_VERSION}-linux-amd64.zip" && \
+    unzip "rclone-${RCLONE_VERSION}-linux-amd64.zip" && \
+    mv "rclone-${RCLONE_VERSION}-linux-amd64/rclone" /usr/bin/ && \
+    chmod a+x /usr/bin/rclone
 WORKDIR /root
 COPY home/* ./
 CMD ["./backup.sh"]
