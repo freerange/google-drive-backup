@@ -6,6 +6,7 @@
 
 * node.js & npm
 * Docker CLI for building & pushing images
+* AWS CLI for initial setup (optional)
 
 ## Building Docker images
 
