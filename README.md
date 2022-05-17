@@ -36,6 +36,10 @@ Specify values for the following environment variables in the `.env` file:
 * `RCLONE_S3_REGION` - AWS region in which `cdk deploy` was run and thus S3 bucket was created
 * `CRON_SCHEDULE` - JSON representation of JavaScript object conforming to [`CronOptions` interface](https://docs.aws.amazon.com/cdk/api/latest/docs/@aws-cdk_aws-applicationautoscaling.CronOptions.html), e.g. `{"weekDay":"mon","hour":"03","minute":"15"}`
 
+### Healthchecks
+
+* Create a [healthchecks.io](healthchecks.io) account, create a project, and add a check with a suitable period and grace time to ensure the task completes successfully according to the schedule defined in `CRON_SCHEDULE`, and add suitable integrations to provide relevant notifications. Set `HEALTHCHECKS_URL` to the "ping URL" for the check, this will be of the form: https://hc-ping.com/${uuid}.
+
 ## Credentials
 
 ### Google Drive access
