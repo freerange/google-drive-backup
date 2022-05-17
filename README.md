@@ -39,17 +39,16 @@ Specify values for the following environment variables in the `.env` file:
 
 ### Google Drive access
 
-* Download the JSON credentials file attached to the "Google Drive Backup (Google Service Account user)" entry in the shared 1Password vault and save them in a temporary file called `google-drive-credentials.json`.
+* [Create a Service Account for your organisation's G-Suite/Google Workspace account](https://rclone.org/drive/#service-account-support) and [give it access to the Google Drive API using domain-wide delegation of authority](https://developers.google.com/admin-sdk/directory/v1/guides/delegation).
+Download a JSON key file for the Service Account and save it in `google-drive-credentials.json`.
 
-* Running `cdk deploy` creates a secret named `/google-drive-backup/RCLONE_DRIVE_SERVICE_ACCOUNT_CREDENTIALS` in the AWS Secrets Manager with an automatically generated value. You should overwrite the value of that secret with the JSON credentials string from the previous step using the following command:
+* Run `cdk deploy` to create a secret named `/google-drive-backup/RCLONE_DRIVE_SERVICE_ACCOUNT_CREDENTIALS` in the AWS Secrets Manager with an automatically generated value. Overwrite the value of that secret with the JSON credentials string from the previous step using the following command:
 
 ```
 $ aws secretsmanager put-secret-value --secret-id /google-drive-backup/RCLONE_DRIVE_SERVICE_ACCOUNT_CREDENTIALS --secret-string `cat google-drive-credentials.json`
 ```
 
-* You can delete the temporary file, `google-drive-credentials.json`, after you've done this, but it might be worth keeping a record of them somewhere secure.
-
-* We use these Google Service Account credentials to impersonate a user via [domain-wide delegation of authority](https://developers.google.com/admin-sdk/directory/v1/guides/delegation) as per [these instructions](https://rclone.org/drive/#use-case-google-apps-g-suite-account-and-individual-drive).
+* You can delete the temporary file, `google-drive-credentials.json`, after you've done this, but it might be worth keeping a record of the credentials somewhere secure.
 
 * The `RCLONE_DRIVE_SERVICE_ACCOUNT_CREDENTIALS` environment variable specifies the credentials for rclone to use for Google Drive (see [this documentation](https://rclone.org/drive/#advanced-options) for details).
 
