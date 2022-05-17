@@ -38,11 +38,13 @@ Specify values for the following environment variables in the `.env` file:
 
 ### Healthchecks
 
-* Create a [healthchecks.io](healthchecks.io) account, create a project, and add a check with a suitable period and grace time to ensure the task completes successfully according to the schedule defined in `CRON_SCHEDULE`, and add suitable integrations to provide relevant notifications. Set `HEALTHCHECKS_URL` to the "ping URL" for the check, this will be of the form: https://hc-ping.com/${uuid}.
+* Create a [healthchecks.io](healthchecks.io) account, create a project, and add a check with a suitable period and grace time to ensure the task completes successfully according to the schedule defined in `CRON_SCHEDULE`.
 
-## Credentials
+* Add suitable integrations to the check to provide relevant notifications, e.g. email, Slack, etc.
 
-### Google Drive access
+* Set `HEALTHCHECKS_URL` to the "ping URL" for the check, this will be of the form: `https://hc-ping.com/${uuid}`.
+
+### Google Drive
 
 * [Create a Service Account for your organisation's G-Suite/Google Workspace account](https://rclone.org/drive/#service-account-support) and [give it access to the Google Drive API using domain-wide delegation of authority](https://developers.google.com/admin-sdk/directory/v1/guides/delegation).
 Download a JSON key file for the Service Account and save it in `google-drive-credentials.json`.
@@ -57,7 +59,7 @@ $ aws secretsmanager put-secret-value --secret-id /google-drive-backup/RCLONE_DR
 
 * The `RCLONE_DRIVE_SERVICE_ACCOUNT_CREDENTIALS` environment variable specifies the credentials for rclone to use for Google Drive (see [this documentation](https://rclone.org/drive/#advanced-options) for details).
 
-### AWS S3 access
+### AWS S3
 
 * This is setup automatically when running `cdk deploy` to generate the stack. The `rclone` `env_auth` config setting is set to `true` so that `rclone` uses the IAM role assigned to the ECS Task - see [this section of the documentation](https://rclone.org/s3/#authentication).
 
