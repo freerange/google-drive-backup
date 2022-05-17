@@ -52,7 +52,9 @@ Download a JSON key file for the Service Account and save it in `google-drive-cr
 * Run `cdk deploy` to create a secret named `/google-drive-backup/RCLONE_DRIVE_SERVICE_ACCOUNT_CREDENTIALS` in the AWS Secrets Manager with an automatically generated value. Overwrite the value of that secret with the JSON credentials string from the previous step using the following command:
 
 ```
-$ aws secretsmanager put-secret-value --secret-id /google-drive-backup/RCLONE_DRIVE_SERVICE_ACCOUNT_CREDENTIALS --secret-string `cat google-drive-credentials.json`
+$ aws secretsmanager put-secret-value \
+  --secret-id /google-drive-backup/RCLONE_DRIVE_SERVICE_ACCOUNT_CREDENTIALS \
+  --secret-string `cat google-drive-credentials.json`
 ```
 
 * You can delete the temporary file, `google-drive-credentials.json`, after you've done this, but it might be worth keeping a record of the credentials somewhere secure.
