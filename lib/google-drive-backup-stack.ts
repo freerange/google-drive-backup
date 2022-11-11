@@ -1,17 +1,19 @@
-import * as cdk from '@aws-cdk/core';
-import * as ecs from '@aws-cdk/aws-ecs';
-import * as ec2 from '@aws-cdk/aws-ec2';
-import * as aas from '@aws-cdk/aws-applicationautoscaling';
-import * as iam from '@aws-cdk/aws-iam';
-import * as s3 from '@aws-cdk/aws-s3';
-import * as sm from '@aws-cdk/aws-secretsmanager';
-import * as ecsp from '@aws-cdk/aws-ecs-patterns';
+import * as cdk from 'aws-cdk-lib';
+import { Construct } from 'constructs';
+
+import * as ecs from 'aws-cdk-lib/aws-ecs';
+import * as ec2 from 'aws-cdk-lib/aws-ec2';
+import * as aas from 'aws-cdk-lib/aws-applicationautoscaling';
+import * as iam from 'aws-cdk-lib/aws-iam';
+import * as s3 from 'aws-cdk-lib/aws-s3';
+import * as sm from 'aws-cdk-lib/aws-secretsmanager';
+import * as ecsp from 'aws-cdk-lib/aws-ecs-patterns';
 import * as dotenv from 'dotenv';
 
 dotenv.config();
 
 export class GoogleDriveBackupStack extends cdk.Stack {
-  constructor(scope: cdk.Construct, id: string, props?: cdk.StackProps) {
+  constructor(scope: Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
 
     const servicePrincipal = new iam.ServicePrincipal('ecs-tasks.amazonaws.com');

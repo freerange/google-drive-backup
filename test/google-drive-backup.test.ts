@@ -1,13 +1,17 @@
-import { expect as expectCDK, matchTemplate, MatchStyle } from '@aws-cdk/assert';
-import cdk = require('@aws-cdk/core');
-import GoogleDriveBackup = require('../lib/google-drive-backup-stack');
+// import * as cdk from 'aws-cdk-lib';
+// import { Template } from 'aws-cdk-lib/assertions';
+// import * as GoogleDriveBackup from '../lib/google-drive-backup-stack';
 
-test('Empty Stack', () => {
-    const app = new cdk.App();
-    // WHEN
-    const stack = new GoogleDriveBackup.GoogleDriveBackupStack(app, 'MyTestStack');
-    // THEN
-    expectCDK(stack).to(matchTemplate({
-      "Resources": {}
-    }, MatchStyle.EXACT))
+// example test. To run these tests, uncomment this file along with the
+// example resource in lib/google-drive-backup-stack.ts
+test('SQS Queue Created', () => {
+//   const app = new cdk.App();
+//     // WHEN
+//   const stack = new GoogleDriveBackup.GoogleDriveBackupStack(app, 'MyTestStack');
+//     // THEN
+//   const template = Template.fromStack(stack);
+
+//   template.hasResourceProperties('AWS::SQS::Queue', {
+//     VisibilityTimeout: 300
+//   });
 });
