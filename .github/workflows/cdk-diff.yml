@@ -1,0 +1,57 @@
+name: CDK Diff
+
+on:
+  pull_request:
+    branches:
+      - main
+
+concurrency:
+  group: pr-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  cdk-diff:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+      pull-requests: write
+    env:
+      AWS_ACCOUNT_ID: ${{ vars.AWS_ACCOUNT_ID }}
+      AWS_REGION: ${{ vars.AWS_REGION }}
+      AWS_ROLE_NAME: ${{ vars.AWS_ROLE_NAME }}
+      HEALTHCHECKS_URL: ${{ vars.HEALTHCHECKS_URL }}
+      GOOGLE_DRIVE_IMPERSONATION_EMAIL: ${{ vars.GOOGLE_DRIVE_IMPERSONATION_EMAIL }}
+      GOOGLE_DRIVE_FOLDER: ${{ vars.GOOGLE_DRIVE_FOLDER }}
+      RCLONE_S3_REGION: ${{ vars.RCLONE_S3_REGION }}
+      CRON_SCHEDULE: ${{ vars.CRON_SCHEDULE }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v5
+        with:
+          role-to-assume: arn:aws:iam::${{ env.AWS_ACCOUNT_ID }}:role/${{ env.AWS_ROLE_NAME }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Install Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version-file: .node-version
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run build
+        run: npm run build
+
+      - name: CDK Diff
+        run: |
+          npx cdk diff --all --no-color > cdk-diff-output.txt 2>&1 || true
+
+      - name: Post CDK Diff Comment in PR
+        uses: towardsthecloud/aws-cdk-diff-pr-commenter@v1
+        with:
+          diff-file: cdk-diff-output.txt
+          aws-region: ${{ env.AWS_REGION }}
