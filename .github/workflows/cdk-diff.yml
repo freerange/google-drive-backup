@@ -48,7 +48,7 @@ jobs:
 
       - name: CDK Diff
         run: |
-          npx cdk diff --all --no-color > cdk-diff-output.txt 2>&1 || true
+          npx cdk diff --all --no-color > cdk-diff-output.txt 2>&1
 
       - name: Post CDK Diff Comment in PR
         uses: towardsthecloud/aws-cdk-diff-pr-commenter@v1
