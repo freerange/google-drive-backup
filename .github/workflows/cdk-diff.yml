@@ -51,7 +51,7 @@ jobs:
           npx cdk diff --all --no-color > cdk-diff-output.txt 2>&1
 
       - name: Post CDK Diff Comment in PR
-        uses: towardsthecloud/aws-cdk-diff-pr-commenter@v1
+        uses: towardsthecloud/aws-cdk-diff-pr-commenter@v1.4.0
         with:
           diff-file: cdk-diff-output.txt
           aws-region: ${{ env.AWS_REGION }}
