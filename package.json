@@ -10,7 +10,7 @@
     "cdk": "cdk"
   },
   "devDependencies": {
-    "@swc/core": "^1.16.12",
+    "@swc/core": "^1.16.13",
     "@types/node": "^26.6.3",
     "aws-cdk": "2.1143.0",
     "tsx": "^4.23.15",
