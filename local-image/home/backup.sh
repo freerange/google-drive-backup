@@ -4,6 +4,7 @@ curl --retry 3 $HEALTHCHECKS_URL/start
 
 rclone \
   --config rclone.conf --verbose \
+  --drive-skip-dangling-shortcuts \
   --drive-impersonate $GOOGLE_DRIVE_IMPERSONATION_EMAIL \
   sync "google-drive:$GOOGLE_DRIVE_FOLDER" "s3:$S3_BUCKET_NAME"
 
